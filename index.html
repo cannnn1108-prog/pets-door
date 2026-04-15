@@ -148,6 +148,17 @@
     }
     .feature-card:hover { box-shadow: var(--shadow); }
     .feature-icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .feature-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 16px;
+      background: var(--white);
+    }
+    .feature-img img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
     .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--primary-d); }
     .feature-card p  { font-size: .88rem; color: var(--muted); }
 
@@ -397,22 +408,22 @@
     <p class="section-sub">4 つのポイント</p>
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">✂️</div>
+        <div class="feature-img"><img src="images/feature-trimming.png" alt="プロのトリミング" /></div>
         <h3>プロのトリミング</h3>
         <p>豊富な犬種に対応。デザインカットからシャンプーセットまでお任せください。</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🏠</div>
+        <div class="feature-img"><img src="images/feature-hotel.png" alt="安心のペットホテル" /></div>
         <h3>安心のペットホテル</h3>
         <p>朝夕2回のお散歩付き。食事サービスもあり、大切な家族を安心してお預けいただけます。</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🚗</div>
+        <div class="feature-img"><img src="images/feature-shuttle.png" alt="送迎無料" /></div>
         <h3>送迎無料</h3>
         <p>練馬区西部・西東京市・東久留米市など広範囲で無料送迎を行っています。</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🐶</div>
+        <div class="feature-img"><img src="images/feature-shop.png" alt="仔犬・仔猫販売" /></div>
         <h3>仔犬・仔猫販売</h3>
         <p>ご希望の種類はお気軽にお問い合わせください。インスタグラムも更新中！</p>
       </div>
@@ -526,7 +537,7 @@
     <p class="section-sub">無料送迎対応エリア</p>
     <div class="area-grid">
       <div class="area-map">
-        <img src="images/map1.jpg" alt="送迎エリアマップ" style="width:100%;" />
+        <img src="images/area-map.png" alt="送迎エリアマップ" style="width:100%;" />
       </div>
       <div>
         <h3 style="font-size:1.1rem; font-weight:700; color:var(--primary-d); margin-bottom:12px;">
@@ -561,9 +572,9 @@
     <p class="section-sub">Shop Information</p>
     <div class="shop-grid">
       <div class="shop-photos">
-        <img src="images/p10100461.jpg" alt="店内の様子" />
-        <img src="images/CA7X7MP41.jpg" alt="店内の様子2" />
-        <img src="images/060612_0933~0002.jpg" alt="ペットの様子" />
+        <img src="images/p10100461.jpg" alt="店舗外観" />
+        <img src="images/location-map.png" alt="店舗案内図" />
+        <img src="images/060612_0933~0002.jpg" alt="店舗のワンちゃん" />
       </div>
       <div>
         <p style="font-size:.95rem; color:#555; margin-bottom:24px; line-height:1.8;">
