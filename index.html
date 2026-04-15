@@ -64,8 +64,12 @@
     .nav-links a:hover { background: var(--light); color: var(--primary); }
     .nav-tel {
       font-size: 1rem; font-weight: 700;
-      color: var(--primary-d);
     }
+    .nav-tel a {
+      color: var(--primary-d);
+      transition: color .2s;
+    }
+    .nav-tel a:hover { color: var(--primary); }
     /* ハンバーガーは簡易版（JS無し） */
     .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
     .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
@@ -477,7 +481,7 @@
       <li><a href="#shop">店舗紹介</a></li>
       <li><a href="#coupon">クーポン</a></li>
     </ul>
-    <div class="nav-tel">📞 03-5387-1480</div>
+    <div class="nav-tel"><a href="tel:0353871480">📞 03-5387-1480</a></div>
     <div class="hamburger" onclick="this.nextElementSibling&&void(0)">
       <span></span><span></span><span></span>
     </div>
