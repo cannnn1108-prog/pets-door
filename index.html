@@ -360,6 +360,47 @@
     }
     footer a { color: #c8dfc8; }
 
+    /* ===== Lightbox ===== */
+    .zoomable { cursor: zoom-in; transition: opacity .2s; }
+    .zoomable:hover { opacity: .85; }
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .9);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      cursor: zoom-out;
+      animation: lbFade .2s ease;
+    }
+    .lightbox.active { display: flex; }
+    @keyframes lbFade { from { opacity: 0; } to { opacity: 1; } }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 12px 50px rgba(0, 0, 0, .6);
+      cursor: default;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 16px; right: 20px;
+      color: #fff;
+      font-size: 40px;
+      line-height: 1;
+      cursor: pointer;
+      user-select: none;
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .1);
+      transition: background .2s;
+    }
+    .lightbox-close:hover { background: rgba(255, 255, 255, .22); }
+
     /* ===== Responsive ===== */
     @media (max-width: 768px) {
       .nav-links, .nav-tel { display: none; }
@@ -681,6 +722,62 @@
   <p>© Pets Door ペッツドアー　｜　東京都練馬区西大泉</p>
   <p style="margin-top:6px;"><a href="#top">↑ ページトップへ</a></p>
 </footer>
+
+<!-- ===== LIGHTBOX ===== -->
+<div id="lightbox" class="lightbox" role="dialog" aria-label="画像拡大表示" aria-hidden="true">
+  <span class="lightbox-close" aria-label="閉じる">×</span>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<script>
+  (function () {
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var closeBtn = lightbox.querySelector('.lightbox-close');
+
+    // 拡大表示対象のセレクタ
+    var selectors = [
+      '.hero-img img',
+      '.feature-img img',
+      '.hotel-img img',
+      '.area-map img',
+      '.shop-gallery img',
+      '.staff-dog img',
+      '.coupon-img img'
+    ];
+
+    document.querySelectorAll(selectors.join(',')).forEach(function (img) {
+      img.classList.add('zoomable');
+      img.addEventListener('click', function () {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt || '';
+        lightbox.classList.add('active');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    lightbox.addEventListener('click', closeLightbox);
+    closeBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      closeLightbox();
+    });
+    // 画像をタップしても閉じないように
+    lightboxImg.addEventListener('click', function (e) { e.stopPropagation(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>
