@@ -321,6 +321,23 @@
       .shop-photos { grid-template-columns: 1fr 1fr; }
       .shop-photos img { height: 130px; }
       .coupon-box { padding: 28px 20px; }
+
+      /* 料金表のモバイル最適化 */
+      .price-table { table-layout: auto; }
+      .price-table th,
+      .price-table td {
+        padding: 10px 8px;
+        font-size: .78rem;
+        line-height: 1.45;
+      }
+      .price-table thead th {
+        white-space: nowrap;
+        font-size: .75rem;
+        padding: 10px 6px;
+      }
+      .price-table th { width: auto; }
+      .price-table tbody th { font-weight: 600; }
+      .price-table .price-tag { white-space: nowrap; }
     }
   </style>
 </head>
