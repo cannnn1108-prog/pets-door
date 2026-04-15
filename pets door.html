@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pets Door | ペットショップ ペッツドアー</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #fafaf8;
+      color: #333;
+      line-height: 1.7;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* ===== CSS Variables ===== */
+    :root {
+      --primary:   #5b8a5e;
+      --primary-d: #3e6641;
+      --accent:    #e8a04a;
+      --light:     #f4f8f4;
+      --white:     #ffffff;
+      --gray:      #f0f0ee;
+      --text:      #333333;
+      --muted:     #777777;
+      --radius:    12px;
+      --shadow:    0 4px 20px rgba(0,0,0,.08);
+    }
+
+    /* ===== Header / Nav ===== */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 24px; height: 64px;
+    }
+    .logo {
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--primary);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo span { font-size: .85rem; color: var(--muted); font-weight: 400; }
+    .nav-links {
+      display: flex; gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: .88rem; font-weight: 500;
+      color: var(--text);
+      transition: background .2s, color .2s;
+    }
+    .nav-links a:hover { background: var(--light); color: var(--primary); }
+    .nav-tel {
+      font-size: 1rem; font-weight: 700;
+      color: var(--primary-d);
+    }
+    /* ハンバーガーは簡易版（JS無し） */
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
+
+    /* ===== Hero ===== */
+    .hero {
+      position: relative;
+      background: linear-gradient(135deg, #e8f2e9 0%, #fdf6ec 100%);
+      overflow: hidden;
+      padding: 80px 24px;
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 48px;
+    }
+    .hero-text h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary-d);
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+    .hero-text h1 em {
+      font-style: normal; color: var(--accent);
+    }
+    .hero-text p {
+      font-size: 1.05rem; color: #555;
+      margin-bottom: 32px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 13px 28px;
+      border-radius: 50px;
+      font-weight: 700; font-size: .95rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.15); }
+    .btn-primary { background: var(--primary); color: var(--white); }
+    .btn-outline {
+      border: 2px solid var(--primary); color: var(--primary);
+      margin-left: 12px;
+    }
+    .hero-img {
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,.12);
+    }
+    .hero-img img { width: 100%; object-fit: cover; }
+
+    /* ===== Section Base ===== */
+    section { padding: 80px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      text-align: center;
+      font-size: 1.7rem; font-weight: 700;
+      color: var(--primary-d);
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      text-align: center; color: var(--muted);
+      font-size: .9rem; margin-bottom: 48px;
+    }
+    .section-sub::before { content: "— "; }
+    .section-sub::after  { content: " —"; }
+
+    /* ===== Features / 特徴 ===== */
+    .features { background: var(--white); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      text-align: center;
+      transition: box-shadow .2s;
+    }
+    .feature-card:hover { box-shadow: var(--shadow); }
+    .feature-icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--primary-d); }
+    .feature-card p  { font-size: .88rem; color: var(--muted); }
+
+    /* ===== Trimming ===== */
+    .trimming { background: var(--light); }
+    .price-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .price-card-head {
+      background: var(--primary);
+      color: var(--white);
+      padding: 14px 24px;
+      font-weight: 700; font-size: 1rem;
+    }
+    .price-table {
+      width: 100%; border-collapse: collapse;
+    }
+    .price-table th, .price-table td {
+      padding: 12px 20px;
+      font-size: .9rem;
+      border-bottom: 1px solid var(--gray);
+      text-align: left;
+    }
+    .price-table th {
+      background: #f7fbf7;
+      font-weight: 700; color: var(--primary-d);
+      width: 50%;
+    }
+    .price-table tr:last-child td,
+    .price-table tr:last-child th { border-bottom: none; }
+    .price-tag { font-weight: 700; color: var(--primary); }
+    .price-note {
+      background: #fff9f2;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 16px 20px;
+      font-size: .88rem; color: #665;
+      margin-top: 12px;
+    }
+    .price-note ul { padding-left: 18px; }
+    .price-note li { margin-bottom: 4px; }
+    .badge-free {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--white);
+      font-size: .75rem; font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 50px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    /* ===== Hotel ===== */
+    .hotel { background: var(--white); }
+    .hotel-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: start;
+    }
+    .hotel-img {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    /* ===== Area ===== */
+    .area { background: var(--light); }
+    .area-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: center;
+    }
+    .area-map {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .area-list {
+      list-style: none; display: flex; flex-wrap: wrap; gap: 10px;
+      margin-top: 16px;
+    }
+    .area-list li {
+      background: var(--white);
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+      border-radius: 50px;
+      padding: 4px 16px;
+      font-size: .88rem; font-weight: 500;
+    }
+
+    /* ===== Shop Info ===== */
+    .shop { background: var(--white); }
+    .shop-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: start;
+    }
+    .shop-photos {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .shop-photos img {
+      border-radius: var(--radius);
+      width: 100%; object-fit: cover; height: 180px;
+      box-shadow: var(--shadow);
+    }
+    .info-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    .info-table th, .info-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--gray);
+      text-align: left;
+    }
+    .info-table th {
+      width: 36%; color: var(--muted); font-weight: 500;
+      background: var(--light);
+    }
+
+    /* ===== Coupon ===== */
+    .coupon { background: linear-gradient(135deg, #fdf1e0 0%, #fff8ee 100%); }
+    .coupon-box {
+      max-width: 640px; margin: 0 auto;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(232,160,74,.2);
+      padding: 40px 48px;
+      text-align: center;
+      border: 2px dashed var(--accent);
+    }
+    .coupon-box .coupon-icon { font-size: 3rem; margin-bottom: 12px; }
+    .coupon-box h3 { font-size: 1.4rem; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    .coupon-box p { color: var(--muted); font-size: .9rem; margin-bottom: 20px; }
+    .coupon-img { border-radius: var(--radius); overflow: hidden; margin-top: 20px; }
+    .coupon-amount {
+      font-size: 3rem; font-weight: 700; color: var(--accent);
+      line-height: 1;
+    }
+    .coupon-amount span { font-size: 1.1rem; }
+
+    /* ===== CTA / Tel ===== */
+    .cta {
+      background: var(--primary);
+      padding: 64px 24px;
+      text-align: center;
+      color: var(--white);
+    }
+    .cta h2 { font-size: 1.5rem; margin-bottom: 8px; }
+    .cta .tel-num {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700; letter-spacing: .05em;
+      margin: 16px 0;
+    }
+    .cta .tel-num a { color: var(--white); }
+    .cta p { font-size: .88rem; opacity: .85; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #2a3d2c;
+      color: #adc8ad;
+      text-align: center;
+      padding: 32px 24px;
+      font-size: .83rem;
+    }
+    footer a { color: #c8dfc8; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .nav-links, .nav-tel { display: none; }
+      .hamburger { display: flex; }
+      .hero-inner, .hotel-grid, .area-grid, .shop-grid { grid-template-columns: 1fr; }
+      .hero-img { order: -1; }
+      .shop-photos { grid-template-columns: 1fr 1fr; }
+      .shop-photos img { height: 130px; }
+      .coupon-box { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <nav class="nav-inner">
+    <div class="logo">
+      🐾 Pets Door
+      <span>ペットショップ ペッツドアー</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#trimming">トリミング</a></li>
+      <li><a href="#hotel">ホテル</a></li>
+      <li><a href="#area">送迎エリア</a></li>
+      <li><a href="#shop">店舗紹介</a></li>
+      <li><a href="#coupon">クーポン</a></li>
+    </ul>
+    <div class="nav-tel">📞 03-5387-1480</div>
+    <div class="hamburger" onclick="this.nextElementSibling&&void(0)">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>ペットは<em>家族</em>の<br>一員です</h1>
+      <p>
+        私たち <strong>Pets Door</strong> では、<br>
+        飼い主とペットのより良い生活を営むための<br>
+        お手伝いをしています。<br>
+        トリミング・ホテル・仔犬仔猫販売まで。
+      </p>
+      <a href="#trimming" class="btn btn-primary">料金表を見る</a>
+      <a href="#shop" class="btn btn-outline">店舗紹介</a>
+    </div>
+    <div class="hero-img">
+      <img src="http://www.pets-door.com/P9080001.petsdoor.jpg" alt="ペッツドアー ショップイメージ" />
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="features">
+  <div class="section-inner">
+    <h2 class="section-title">Pets Door の特徴</h2>
+    <p class="section-sub">4 つのポイント</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">✂️</div>
+        <h3>プロのトリミング</h3>
+        <p>豊富な犬種に対応。デザインカットからシャンプーセットまでお任せください。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏠</div>
+        <h3>安心のペットホテル</h3>
+        <p>朝夕2回のお散歩付き。食事サービスもあり、大切な家族を安心してお預けいただけます。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚗</div>
+        <h3>送迎無料</h3>
+        <p>練馬区西部・西東京市・東久留米市など広範囲で無料送迎を行っています。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🐶</div>
+        <h3>仔犬・仔猫販売</h3>
+        <p>ご希望の種類はお気軽にお問い合わせください。インスタグラムも更新中！</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRIMMING ===== -->
+<section class="trimming" id="trimming">
+  <div class="section-inner">
+    <h2 class="section-title">トリミング料金表</h2>
+    <p class="section-sub">税込価格（R7）</p>
+
+    <p style="margin-bottom:16px; font-size:.9rem; color:#555;">
+      送迎無料 <span class="badge-free">FREE</span>&ensp;
+      ご来店の場合 <strong>¥500 引き</strong>&ensp;|&ensp;
+      トリミング送迎受付 <strong>PM 2:00 頃まで</strong>
+    </p>
+
+    <div class="price-card">
+      <div class="price-card-head">🐩 小型犬・中型犬・大型犬</div>
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>種　類</th>
+            <th>シャンプーセット</th>
+            <th>カット（シャンプーセット込）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>小型犬 S（7kg未満）</th><td class="price-tag">¥4,400〜</td><td class="price-tag">¥6,050〜</td></tr>
+          <tr><th>小型犬 M（7kg以上）</th><td class="price-tag">¥4,950〜</td><td class="price-tag">¥6,600〜</td></tr>
+          <tr><th>小型テリア（ワイヤー・Mシュナ・テリア他）</th><td class="price-tag">¥6,050〜</td><td class="price-tag">¥7,150〜</td></tr>
+          <tr><th>コッカー・スパニエル</th><td class="price-tag">¥6,050〜</td><td class="price-tag">¥7,700〜</td></tr>
+          <tr><th>トイプードル（6kg未満）</th><td class="price-tag">¥4,950〜</td><td class="price-tag">¥7,150〜</td></tr>
+          <tr><th>Mプードル（6kg以上）・ビションフリーゼ</th><td class="price-tag">¥6,380〜</td><td class="price-tag">¥8,580〜</td></tr>
+          <tr><td colspan="3" style="background:#f7fbf7; color:var(--primary); font-weight:700; font-size:.85rem;">
+            ＜プードル＞ デザインカット　プラス ¥880〜
+          </td></tr>
+          <tr><th>中型犬（柴・ビーグル・Wコーギー・他）</th><td class="price-tag">¥6,710〜</td><td rowspan="3" class="price-tag" style="vertical-align:middle;">シャンプー代＋¥2,200〜</td></tr>
+          <tr><th>中型長毛犬・シェルティ・他</th><td class="price-tag">¥7,810〜</td></tr>
+          <tr><th>ゴールデン・ラブラドール</th><td class="price-tag">¥10,450〜</td></tr>
+          <tr><th>大型犬（Sプードル・オールド）</th><td class="price-tag">¥14,300〜</td><td class="price-tag">¥18,700〜</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="price-note">
+      <ul>
+        <li>☆ シャンプーセット：爪切り・足回り・耳掃除・肛門絞り 込み</li>
+        <li>☆ ひどい毛玉・汚れ・換毛　プラス ¥550〜</li>
+        <li>☆ 部分カット　各 ¥550〜</li>
+        <li>☆ 全身ハサミカット　プラス ¥1,000〜</li>
+        <li>☆ ロング代（長毛希望の方）　プラス ¥1,000</li>
+        <li>☆ 薬用シャンプー・サロンシャンプー・トリートメント：小型犬 ¥880 / 中型犬 ¥1,100 / 大型犬 ¥1,650</li>
+        <li>☆ 保定代（シニア犬など介助が必要な場合・著しく多動な場合）　プラス ¥1,000</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOTEL ===== -->
+<section class="hotel" id="hotel">
+  <div class="section-inner">
+    <h2 class="section-title">ペットホテル料金表</h2>
+    <p class="section-sub">1泊2日（翌日 PM12:00 まで）</p>
+
+    <div class="hotel-grid">
+      <div>
+        <p style="margin-bottom:16px; font-size:.9rem; color:#555;">
+          送迎無料 <span class="badge-free">FREE</span>&ensp;
+          PM以降は延長料金になります。送迎はお早めにご予約ください。
+        </p>
+        <div class="price-card">
+          <div class="price-card-head">🏠 宿泊料金（税込・R4）</div>
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th>種　類</th>
+                <th>1泊</th>
+                <th>延長（1時間）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th>超大型犬（アフガン・Gピレニーズ・他）</th><td class="price-tag">¥6,600</td><td>¥770</td></tr>
+              <tr><th>大型犬（ゴールデン・ラブラドール・他）</th><td class="price-tag">¥5,500</td><td>¥660</td></tr>
+              <tr><th>中型犬（柴・ビーグル・テリア他）</th><td class="price-tag">¥4,400</td><td>¥550</td></tr>
+              <tr><th>小型犬（シーズー・Mダックス・他）</th><td class="price-tag">¥3,300</td><td>¥440</td></tr>
+              <tr><th>猫（アメショー・ペルシャ・他）</th><td class="price-tag">¥3,850</td><td>¥495</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="price-note" style="margin-top:16px;">
+          <ul>
+            <li>☆ 朝・夕方 2回のお散歩付き</li>
+            <li>☆ 食事サービスあり（治療食や好き嫌いのある子はご持参ください）</li>
+          </ul>
+        </div>
+      </div>
+      <div class="hotel-img">
+        <img src="http://www.pets-door.com/DSCF0165.jpg" alt="ペットホテルの様子" style="width:100%; height:100%; object-fit:cover;" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AREA ===== -->
+<section class="area" id="area">
+  <div class="section-inner">
+    <h2 class="section-title">送迎エリア</h2>
+    <p class="section-sub">無料送迎対応エリア</p>
+    <div class="area-grid">
+      <div class="area-map">
+        <img src="http://www.pets-door.com/map1.jpg" alt="送迎エリアマップ" style="width:100%;" />
+      </div>
+      <div>
+        <h3 style="font-size:1.1rem; font-weight:700; color:var(--primary-d); margin-bottom:12px;">
+          無料送迎エリア <span class="badge-free">FREE</span>
+        </h3>
+        <ul class="area-list">
+          <li>練馬区西部</li>
+          <li>西東京市</li>
+          <li>東久留米市</li>
+          <li>新座市</li>
+          <li>清瀬市</li>
+          <li>和光市南</li>
+        </ul>
+        <p style="margin-top:20px; font-size:.88rem; color:var(--muted);">
+          ※ 区域により一部有料（¥500〜）となる場合があります。<br>
+          詳しくはお電話にてお問い合わせください。
+        </p>
+        <div style="margin-top:24px;">
+          <img src="http://www.pets-door.com/P10100573.jpg" alt="スタッフB宅 チョコちゃん"
+               style="width:180px; border-radius:var(--radius); box-shadow:var(--shadow);" />
+          <p style="font-size:.8rem; color:var(--muted); margin-top:6px;">スタッフB宅 チョコちゃん 🐶</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SHOP INFO ===== -->
+<section class="shop" id="shop">
+  <div class="section-inner">
+    <h2 class="section-title">店舗紹介</h2>
+    <p class="section-sub">Shop Information</p>
+    <div class="shop-grid">
+      <div class="shop-photos">
+        <img src="http://www.pets-door.com/p10100461.jpg" alt="店内の様子" />
+        <img src="http://www.pets-door.com/CA7X7MP41.jpg" alt="店内の様子2" />
+        <img src="http://www.pets-door.com/060612_0933~0002.jpg" alt="ペットの様子" />
+        <img src="http://www.pets-door.com/P9080001.petsdoor.jpg" alt="ショップ外観" />
+      </div>
+      <div>
+        <p style="font-size:.95rem; color:#555; margin-bottom:24px; line-height:1.8;">
+          仔犬・仔猫の販売もしています。<br>
+          ご希望の種類があれば、お気軽にお問い合わせください。<br>
+          <strong>インスタグラムも更新中！</strong> ぜひフォローしてください。
+        </p>
+        <table class="info-table">
+          <tr><th>営業時間</th><td><strong>AM 10:00 〜 PM 6:00</strong><br>
+            <span style="font-size:.82rem; color:var(--muted);">
+              トリミング受付 PM 3:00 まで<br>
+              送迎受付 PM 2:00 まで
+            </span>
+          </td></tr>
+          <tr><th>予約</th><td>予約優先</td></tr>
+          <tr><th>住所</th><td>東京都練馬区西大泉3-30-12<br>コア西大泉 1F</td></tr>
+          <tr><th>電話</th><td><a href="tel:0353871480" style="color:var(--primary); font-weight:700;">03-5387-1480</a></td></tr>
+          <tr><th>動物取扱業</th><td>
+            販売：21東京都販第000973号<br>
+            保管：21東京都保第000973号
+          </td></tr>
+          <tr><th>登録更新日</th><td>令和4年2月19日</td></tr>
+          <tr><th>有効期限</th><td>令和9年2月18日</td></tr>
+          <tr><th>責任者</th><td>佐々木隆一</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COUPON ===== -->
+<section class="coupon" id="coupon">
+  <div class="section-inner">
+    <h2 class="section-title">クーポン</h2>
+    <p class="section-sub">初めての方へ</p>
+    <div class="coupon-box">
+      <div class="coupon-icon">🎫</div>
+      <h3>初回トリミング割引クーポン</h3>
+      <p>こちらの画面をスタッフにご提示ください（印刷でも可）</p>
+      <div class="coupon-amount"><span>￥</span>1,000<span> OFF</span></div>
+      <p style="margin-top:8px; font-size:.82rem;">初回トリミング代より ¥1,000 引き</p>
+      <div class="coupon-img">
+        <img src="http://www.pets-door.com/P90800011.petsdoor.jpg" alt="クーポン" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta">
+  <h2>ご予約・お問い合わせ</h2>
+  <div class="tel-num"><a href="tel:0353871480">03-5387-1480</a></div>
+  <p>営業時間：AM 10:00 〜 PM 6:00　|　予約優先</p>
+  <p style="margin-top:8px;">東京都練馬区西大泉3-30-12 コア西大泉1F</p>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>© Pets Door ペッツドアー　｜　東京都練馬区西大泉</p>
+  <p style="margin-top:6px;"><a href="#top">↑ ページトップへ</a></p>
+</footer>
+
+</body>
+</html>
