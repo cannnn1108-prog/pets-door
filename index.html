@@ -297,7 +297,32 @@
       font-weight: 700;
       color: var(--primary-d);
       background: var(--light);
+      line-height: 1.6;
     }
+    .gmap-btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 6px 14px;
+      background: var(--primary);
+      color: var(--white) !important;
+      border-radius: 50px;
+      font-size: .78rem;
+      font-weight: 600;
+      transition: background .2s, transform .2s;
+    }
+    .gmap-btn:hover { background: var(--primary-d); transform: translateY(-1px); }
+    .map-link {
+      color: var(--text) !important;
+      display: block;
+    }
+    .map-link-icon {
+      display: inline-block;
+      margin-top: 6px;
+      color: var(--primary);
+      font-size: .82rem;
+      font-weight: 600;
+    }
+    .map-link:hover .map-link-icon { text-decoration: underline; }
     .shop-grid {
       display: grid; grid-template-columns: 1fr; gap: 40px;
       align-items: start;
@@ -654,7 +679,10 @@
       </figure>
       <figure>
         <img src="images/location-map.png" alt="店舗案内図" />
-        <figcaption>🗺 店舗案内図</figcaption>
+        <figcaption>
+          🗺 店舗案内図<br>
+          <a href="https://www.google.com/maps/search/?api=1&query=Pets+Door+%E6%9D%B1%E4%BA%AC%E9%83%BD%E7%B7%B4%E9%A6%AC%E5%8C%BA%E8%A5%BF%E5%A4%A7%E6%B3%893-30-12" target="_blank" rel="noopener" class="gmap-btn">📍 店舗への行き方を見る（Google マップ）</a>
+        </figcaption>
       </figure>
       <figure>
         <img src="images/060612_0933~0002.jpg" alt="看板犬" />
@@ -676,7 +704,12 @@
             </span>
           </td></tr>
           <tr><th>予約</th><td>予約優先</td></tr>
-          <tr><th>住所</th><td>東京都練馬区西大泉3-30-12<br>コア西大泉 1F</td></tr>
+          <tr><th>住所</th><td>
+            <a href="https://www.google.com/maps/search/?api=1&query=Pets+Door+%E6%9D%B1%E4%BA%AC%E9%83%BD%E7%B7%B4%E9%A6%AC%E5%8C%BA%E8%A5%BF%E5%A4%A7%E6%B3%893-30-12" target="_blank" rel="noopener" class="map-link">
+              東京都練馬区西大泉3-30-12<br>コア西大泉 1F
+              <span class="map-link-icon">📍 Google マップで見る →</span>
+            </a>
+          </td></tr>
           <tr><th>電話</th><td><a href="tel:0353871480" style="color:var(--primary); font-weight:700;">03-5387-1480</a></td></tr>
           <tr><th>動物取扱業</th><td>
             販売：21東京都販第000973号<br>
