@@ -175,6 +175,9 @@
       border-bottom: 1px solid var(--gray);
       text-align: left;
     }
+    .price-table thead th { text-align: center; }
+    .price-table thead th:first-child { text-align: left; }
+    .price-table tbody td { text-align: center; }
     .price-table th {
       background: #f7fbf7;
       font-weight: 700; color: var(--primary-d);
@@ -247,11 +250,14 @@
       align-items: start;
     }
     .shop-photos {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px;
     }
     .shop-photos img {
       border-radius: var(--radius);
-      width: 100%; object-fit: cover; height: 180px;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: var(--light);
       box-shadow: var(--shadow);
     }
     .info-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
@@ -319,7 +325,7 @@
       .hero-inner, .hotel-grid, .area-grid, .shop-grid { grid-template-columns: 1fr; }
       .hero-img { order: -1; }
       .shop-photos { grid-template-columns: 1fr 1fr; }
-      .shop-photos img { height: 130px; }
+      .shop-photos img { aspect-ratio: 4 / 3; }
       .coupon-box { padding: 28px 20px; }
 
       /* 料金表のモバイル最適化 */
@@ -558,7 +564,6 @@
         <img src="images/p10100461.jpg" alt="店内の様子" />
         <img src="images/CA7X7MP41.jpg" alt="店内の様子2" />
         <img src="images/060612_0933~0002.jpg" alt="ペットの様子" />
-        <img src="images/P9080001.petsdoor.jpg" alt="ショップ外観" />
       </div>
       <div>
         <p style="font-size:.95rem; color:#555; margin-bottom:24px; line-height:1.8;">
