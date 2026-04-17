@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>宮城ゴリのNOTE | Pets Door</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #fafaf8;
+      color: #333;
+      line-height: 1.7;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    :root {
+      --primary:   #5b8a5e;
+      --primary-d: #3e6641;
+      --accent:    #e8a04a;
+      --light:     #f4f8f4;
+      --white:     #ffffff;
+      --gray:      #f0f0ee;
+      --text:      #333333;
+      --muted:     #777777;
+      --radius:    12px;
+      --shadow:    0 4px 20px rgba(0,0,0,.08);
+    }
+
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 24px; height: 64px;
+    }
+    .logo {
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--primary);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo span { font-size: .85rem; color: var(--muted); font-weight: 400; }
+    .nav-links {
+      display: flex; gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: .88rem; font-weight: 500;
+      color: var(--text);
+      transition: background .2s, color .2s;
+    }
+    .nav-links a:hover { background: var(--light); color: var(--primary); }
+    .nav-tel {
+      font-size: 1rem; font-weight: 700;
+    }
+    .nav-tel a {
+      color: var(--primary-d);
+      transition: color .2s;
+    }
+    .nav-tel a:hover { color: var(--primary); }
+
+    .page-hero {
+      background: linear-gradient(135deg, #e8f2e9 0%, #fdf6ec 100%);
+      padding: 60px 24px 40px;
+      text-align: center;
+    }
+    .page-hero h1 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      color: var(--primary-d);
+      margin-bottom: 8px;
+    }
+    .page-hero p {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    .notes-container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .note-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      border-left: 4px solid var(--primary);
+      transition: transform .2s;
+    }
+    .note-card:hover {
+      transform: translateY(-2px);
+    }
+    .note-card.tomorrow {
+      border-left-color: var(--accent);
+      background: #fffcf5;
+    }
+
+    .note-date {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .note-date time {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--white);
+      background: var(--primary);
+      padding: 3px 12px;
+      border-radius: 20px;
+    }
+    .note-card.tomorrow .note-date time {
+      background: var(--accent);
+    }
+    .note-date .day-label {
+      font-size: .8rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .note-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-d);
+      margin-bottom: 8px;
+    }
+    .note-card.tomorrow .note-title {
+      color: #b07820;
+    }
+
+    .note-body {
+      font-size: .95rem;
+      color: #444;
+      line-height: 1.85;
+    }
+    .note-body p {
+      margin-bottom: 8px;
+    }
+    .note-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .note-tag {
+      display: inline-block;
+      font-size: .75rem;
+      background: var(--light);
+      color: var(--primary);
+      padding: 2px 10px;
+      border-radius: 12px;
+      margin-top: 12px;
+      font-weight: 500;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 24px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: .9rem;
+      transition: background .2s;
+    }
+    .back-link:hover {
+      background: var(--primary-d);
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      background: var(--gray);
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .nav-tel { display: none; }
+      .note-card { padding: 20px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="nav-inner">
+    <a href="index.html" class="logo">
+      🐾 Pets Door
+      <span>ペットショップ ペッツドアー</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#trimming">トリミング</a></li>
+      <li><a href="index.html#hotel">ホテル</a></li>
+      <li><a href="index.html#shop">店舗紹介</a></li>
+      <li><a href="notes.html" style="color:var(--primary); font-weight:700;">ゴリのNOTE</a></li>
+    </ul>
+    <div class="nav-tel"><a href="tel:0353871480">📞 03-5387-1480</a></div>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <h1>🦍 宮城ゴリのNOTE</h1>
+  <p>Pets Doorの看板ゴリラ「宮城ゴリ」が綴る、お店の日常と動物たちの話。</p>
+</section>
+
+<div class="notes-container">
+
+  <!-- 2026-04-18 (土) 明日 -->
+  <article class="note-card tomorrow">
+    <div class="note-date">
+      <time datetime="2026-04-18">2026.04.18</time>
+      <span class="day-label">土曜日 ─ 明日の予定</span>
+    </div>
+    <h2 class="note-title">週末はトリミング日和になりそう</h2>
+    <div class="note-body">
+      <p>明日は土曜日。予約表を見たら朝からびっしり埋まっていて、トリマーさんたちも気合い十分だ。トイプードルが3頭、シュナウザーが2頭、ゴールデンが1頭。ゴールデンのモモちゃんは毎月来てくれる常連さんで、ゴリはいつも入口で出迎える係を任されている。</p>
+      <p>天気予報は晴れ。送迎車もフル稼働の予定なので、飼い主さんはお時間に余裕を持ってお待ちください。ゴリも朝からバナナを食べて準備万端で臨む所存。</p>
+    </div>
+    <span class="note-tag">#週末 #トリミング予約</span>
+  </article>
+
+  <!-- 2026-04-17 (金) 今日 -->
+  <article class="note-card">
+    <div class="note-date">
+      <time datetime="2026-04-17">2026.04.17</time>
+      <span class="day-label">金曜日</span>
+    </div>
+    <h2 class="note-title">ホテルのチワワに見つめられた話</h2>
+    <div class="note-body">
+      <p>今日ホテルに預かりに来たチワワの「まめ太」くん。ケージの前を通るたびにじーっとこちらを見てくる。目が合うとしっぽを振ってくれるのだが、ゴリの体格に少しだけ怯えている気もする。</p>
+      <p>飼い主さんは明日の夕方にお迎え予定。「まめ太はさみしがりやなので様子を見てあげてください」と言われたので、ゴリは30分おきにケージの前を通ってあげることにした。さみしくないぞ、まめ太。ゴリがいるからな。</p>
+    </div>
+    <span class="note-tag">#ペットホテル #チワワ</span>
+  </article>
+
+  <!-- 2026-04-16 (木) -->
+  <article class="note-card">
+    <div class="note-date">
+      <time datetime="2026-04-16">2026.04.16</time>
+      <span class="day-label">木曜日</span>
+    </div>
+    <h2 class="note-title">仔猫が3匹やってきた</h2>
+    <div class="note-body">
+      <p>午前中にスコティッシュフォールドの仔猫が3匹、お店にやってきた。生後2ヶ月でまだまだ小さい。段ボールから出てきた瞬間、3匹揃ってゴリを見上げて固まった。そりゃそうだ。</p>
+      <p>午後にはもう慣れたようで、ゴリの足元でじゃれ合っていた。1匹はやたらと勇敢で、ゴリの指にパンチを繰り出してくる。小さな肉球が当たるたびに、胸の奥がきゅっとなる。販売の準備が整い次第、インスタグラムでもご紹介するのでお楽しみに。</p>
+    </div>
+    <span class="note-tag">#仔猫 #スコティッシュフォールド</span>
+  </article>
+
+  <!-- 2026-04-15 (水) -->
+  <article class="note-card">
+    <div class="note-date">
+      <time datetime="2026-04-15">2026.04.15</time>
+      <span class="day-label">水曜日</span>
+    </div>
+    <h2 class="note-title">送迎車の助手席にて</h2>
+    <div class="note-body">
+      <p>今日は送迎のお手伝い。東久留米市のお客様のところへ、柴犬の「はなちゃん」をお迎えに行った。はなちゃんはトリミングの日が近づくとそわそわするらしく、玄関で待っていてくれた。</p>
+      <p>帰りの車中、窓の外を眺めるはなちゃんの横顔がとても凜々しかった。練馬の街並みは新緑がきれいで、春の風が気持ちいい。トリミング後のはなちゃんはふわふわのもこもこになって、飼い主さんも大喜びだった。</p>
+    </div>
+    <span class="note-tag">#送迎 #柴犬 #春</span>
+  </article>
+
+  <!-- 2026-04-14 (火) -->
+  <article class="note-card">
+    <div class="note-date">
+      <time datetime="2026-04-14">2026.04.14</time>
+      <span class="day-label">火曜日</span>
+    </div>
+    <h2 class="note-title">雨の日のお店は静かで好き</h2>
+    <div class="note-body">
+      <p>朝から雨。こういう日はお客様の来店が少なくて、お店の中がとても静かになる。ホテルに泊まっている子たちも穏やかに過ごしていて、ゴリもカウンター横の定位置でのんびりしていた。</p>
+      <p>スタッフさんたちは空いた時間で道具のメンテナンスをしていた。ハサミを研いだり、ドライヤーのフィルターを掃除したり。プロの仕事はこういう地道な準備から成り立っているんだなと、改めて感心した一日。</p>
+    </div>
+    <span class="note-tag">#雨の日 #メンテナンス</span>
+  </article>
+
+  <!-- 2026-04-13 (月) -->
+  <article class="note-card">
+    <div class="note-date">
+      <time datetime="2026-04-13">2026.04.13</time>
+      <span class="day-label">月曜日</span>
+    </div>
+    <h2 class="note-title">週明けはいつもバタバタ</h2>
+    <div class="note-body">
+      <p>月曜日。週末にホテルに預けられていた子たちのお迎えラッシュで朝から大忙しだった。ポメラニアンの「きなこ」ちゃんは飼い主さんの顔を見た瞬間にくるくる回り出して、そのまま3回転半した。</p>
+      <p>午後はトリミングの予約が立て続けに入って、トリマーさんたちがテキパキと動いていた。ゴリはタオルを運んだり、ドアを開けたり、裏方の仕事に徹した。お店が忙しいのは良いこと。みんなが笑顔でいられる証拠だ。</p>
+    </div>
+    <span class="note-tag">#月曜日 #ポメラニアン</span>
+  </article>
+
+  <!-- 2026-04-12 (日) -->
+  <article class="note-card">
+    <div class="note-date">
+      <time datetime="2026-04-12">2026.04.12</time>
+      <span class="day-label">日曜日</span>
+    </div>
+    <h2 class="note-title">春の日曜日、お散歩日和</h2>
+    <div class="note-body">
+      <p>日曜日のお店は家族連れのお客様が多い。今日はご家族で仔犬を見に来てくれた方がいて、お子さんがトイプードルの仔犬を抱っこして「ふわふわ！」と目を輝かせていた。こういう出会いの瞬間に立ち会えるのが、この仕事の一番の喜び。</p>
+      <p>閉店後、ゴリは店の前のベンチでバナナを食べながら夕焼けを眺めた。練馬の空は今日もきれいだった。明日からまた一週間、お店の動物たちと一緒にがんばろう。</p>
+    </div>
+    <span class="note-tag">#日曜日 #仔犬 #春の夕焼け</span>
+  </article>
+
+  <div style="text-align:center; margin-top:16px;">
+    <a href="index.html" class="back-link">🐾 トップページに戻る</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 Pets Door ペッツドアー ─ 宮城ゴリのNOTE</p>
+</footer>
+
+</body>
+</html>
