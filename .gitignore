@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# 画像のオリジナルバックアップ（最適化前のファイル群）
+images/_originals/
+
+# 内部ドキュメント（社長・店舗向け資料 - 公開しない）
+MARKETING_REPORT.md
+SEO_OFFSITE_CHECKLIST.md
+SHOP_REPORT.md
+
+# エディタ
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /images/_originals/
+
+Sitemap: https://cannnn1108-prog.github.io/pets-door/sitemap.xml
